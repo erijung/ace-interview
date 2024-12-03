@@ -1,6 +1,5 @@
 
 import streamlit as st
-import mediapipe as mp
 from feature_utils.pose_detection import *
 
 def main():
@@ -15,16 +14,20 @@ def main():
     questions = ["",
                  "Describe a time you worked as part of a team.",
                  "Describe your most challenging project.",
-                 "(Randomly select an interview question)"]
+                 "(Randomly select an interview question)",
+                 "(Create your own custom interview question)"]
     question = st.selectbox("*Select an interview question*", options = questions)
 
 
     if question == "":
         "**Please select a question from the above dropdown menu before proceeding.**"
     if question != "":
+        if question == questions[-2]:
+            question = np.random.choice(questions[1:-2])
         if question == questions[-1]:
-            question = np.random.choice(questions[1:-1])
+            question = st.text_input("*Enter your custom interview question*")
         st.markdown("**Your question:**" + " " + question)
+
 
     st.markdown('##')
     "Next, please record a video of yourself responding to the question. \
@@ -35,8 +38,10 @@ def main():
 
     begin = st.button("**Generate feedback**")
     if begin:
-        if video is None:
-            "Error: No video uploaded. Please upload a video file in the space above."
+        if question == "":
+            "**Error:** No question selected. Please select a question from the dropdown menu above."
+        elif video is None:
+            "**Error:** No video uploaded. Please upload a video file in the space above."
         else:
             st.write("Processing video. This may take a few minutes...")
             pose_results = pose_detection(video)

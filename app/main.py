@@ -1,7 +1,7 @@
 
 import streamlit as st
 import mediapipe as mp
-from pose_detection import *
+from feature_utils.pose_detection import *
 
 def main():
     st.title("Welcome to AceInterview!")

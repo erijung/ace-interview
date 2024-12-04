@@ -24,7 +24,7 @@ def main():
     questions = ["",
                  "Please introduce yourself.",
                  "Talk about a time when you demonstrated leadership.",
-                 "Describe time when you were working with a team and faced a challenge. How did you overcome the problem?",
+                 "Describe a time when you were working with a team and faced a challenge. How did you overcome the problem?",
                  "What is one of your weaknesses and how do you plan to overcome it?",
                  "Why do you think you should be hired?",
                  "(Randomly select an interview question)",

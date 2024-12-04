@@ -58,7 +58,8 @@ def main():
 
             feedback = pose_results
             st.header("Results:")
-            st.json(feedback)
+            #st.json(feedback)
+            "You did great! (This is just a placeholder)"
             st.download_button(label = "Save feedback as .txt",
                        data = str(feedback),
                        file_name = "ace_interview_feedback.txt")

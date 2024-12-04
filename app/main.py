@@ -1,13 +1,23 @@
-
+import numpy as np
 import streamlit as st
 from feature_utils.pose_detection import *
 
 def main():
+    st.set_page_config(
+    page_title="AceInterview",
+    page_icon=":briefcase:",
+    layout="centered",
+        menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': "**UC Berkeley 5th Year MIDS Fall 2024 Capstone Project** by Eric Jung, Sean Wei, Parker Brailow, Naveen Sukumar"
+    })
+
     st.title("Welcome to AceInterview!")
 
-    "AceInterview is a practice interview platform which leverages\
-    artificial intelligence to analyze and provide feedback on user posture, \
-    speaking tone, eye contact, and other key interview behaviors."
+    "AceInterview is an AI practice interview platform which analyzes and \
+    provides feedback on user posture, speaking tone, eye contact, and other \
+    key interview behaviors."
 
     "To get started, please select an interview question below:"
 
@@ -15,7 +25,7 @@ def main():
                  "Describe a time you worked as part of a team.",
                  "Describe your most challenging project.",
                  "(Randomly select an interview question)",
-                 "(Create your own custom interview question)"]
+                 "(Enter your own custom interview question)"]
     question = st.selectbox("*Select an interview question*", options = questions)
 
 

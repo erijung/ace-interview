@@ -5,6 +5,8 @@ from feature_utils.pose_detection import *
 from feature_utils.smile import *
 
 def main():
+
+
     st.set_page_config(
     page_title="AceInterview",
     page_icon=":briefcase:",
@@ -65,7 +67,6 @@ def main():
                 temp_video_path = temp_video.name
             pose_results = pose_detection(temp_video_path)
             smile_results = detect_smiles_video(temp_video_path)
-
             feedback = """
 Hello!
 Thank you for completing the interview. After analyzing your performance, I’d like to share my thoughts to help you grow and succeed in future interviews. Below, I’ll break down different aspects of your performance with specific feedback and examples. Let’s dive in!
@@ -97,8 +98,8 @@ You demonstrate potential as a candidate with a clear academic focus and relevan
 You’ve got a lot of potential, and with these adjustments, you’ll excel in future interviews. Best of luck"""
 
             st.header("Results:")
-            #st.json(feedback)
-            st.markdown(feedback)
+            st.json(smile_results)
+            #st.markdown(feedback)
             st.download_button(label = "Save feedback as .txt",
                        data = str(feedback),
                        file_name = "ace_interview_feedback.txt")

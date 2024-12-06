@@ -1,10 +1,13 @@
 import cv2
-
 # read haar cascade for face detection
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+#print("Cascade file exists:", os.path.exists('app/feature_utils/haarcascade_frontalface_default.xml'))
+
+face_cascade = cv2.CascadeClassifier('app/feature_utils/haarcascade_frontalface_default.xml')
 
 # read haar cascade for smile detection
-smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
+smile_cascade = cv2.CascadeClassifier('app/feature_utils/haarcascade_smile.xml')
+
 
 def detect_smile(img):
   # read input image
@@ -32,26 +35,30 @@ def detect_smiles_video(video_path):
     # Open video file
     cap = cv2.VideoCapture(video_path)
 
-    # Get video properties
-    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    # # Get video properties
+    # width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    # height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_interval = int(fps / 1)   # Process every Nth frame for 3 FPS sampling
 
     smiles = 0
     nonsmiles = 0
     count = 0
     while cap.isOpened():
     #for i in np.arange(1000): #first 1000 frames, use the while loop in the above line for whole video
+        count += 1
+
         ret, frame = cap.read()
         if not ret:
             break  # Exit the loop if there are no more frames
 
-        if detect_smile(frame):
+        if count % frame_interval != 0:
+            continue
+        elif detect_smile(frame):
           smiles += 1
         else:
           nonsmiles += 1
 
-        count += 1
 
 #        if count % 500 == 0:
 #          print(smiles, nonsmiles, count)

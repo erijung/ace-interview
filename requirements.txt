@@ -7,3 +7,7 @@ mpmath==1.2.1
 boto3==1.35.28
 praat-parselmouth==0.4.5
 requests
+hume
+python-dotenv
+openai
+google-generativeai

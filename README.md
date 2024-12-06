@@ -1,5 +1,6 @@
 # AceInterview
-UC Berkeley MIDS 5th Year Fall 2024 Capstone Project by Eric Jung, Sean Wei, Parker Brailow, Naveen Sukumar
+**UC Berkeley MIDS 5th Year Fall 2024 Capstone Project**
+by Eric Jung, Sean Wei, Parker Brailow, Naveen Sukumar
 
 ## Project Description
 

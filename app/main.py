@@ -18,7 +18,7 @@ def main():
 
     st.title("Welcome to AceInterview!")
 
-    "AceInterview is an AI practice interview platform which analyzes and \
+    "AceInterview is an AI practice interview platform that analyzes and \
     provides feedback on user posture, speaking tone, eye contact, and other \
     key interview behaviors."
 

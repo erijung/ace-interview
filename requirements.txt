@@ -8,3 +8,7 @@ boto3==1.35.28
 praat-parselmouth==0.4.5
 audio-extract==0.7.0
 requests
+hume
+python-dotenv
+openai
+google-generativeai

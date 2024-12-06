@@ -45,6 +45,19 @@ def get_upload_url(username):
     except Exception as e:
         print("An error occurred:", str(e))
 
+
+def upload_video_to_presigned_url(presigned_url, video_file_path):
+    with open(video_file_path, 'rb') as file:
+        response = requests.put(presigned_url, data=file)
+
+    if response.status_code == 200:
+        print("Video uploaded successfully!")
+    else:
+        print("Error uploading video:", response.status_code, response.text)
+
+
+
+
 def get_transcript(file, timeout=360, wait_interval=5, bucket_name = 'mids-capstone-aceinterview', folder_name = 'CrisperWhisperEndpoint'):
     """
     Fetch a JSON file representing the transcript with word level timestamps from an S3 bucket, waiting for it to appear if necessary.

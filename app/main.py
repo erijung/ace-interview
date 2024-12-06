@@ -4,6 +4,9 @@ import tempfile
 from feature_utils.pose_detection import *
 from feature_utils.smile import *
 from feature_utils.prosody import *
+from feature_utils.emotion_analysis import *
+from feature_utils.crisperwhisper import *
+from feature_utils.downstream_llm import *
 
 def main():
     st.set_page_config(
@@ -64,12 +67,30 @@ def main():
             with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_video:
                 temp_video.write(video.read())
                 temp_video_path = temp_video.name
+            
+            upload_details = get_upload_url("ace-interview")
+            upload_url = upload_details["upload_url"]
+            transcript_file_name = upload_details["file"]
+
+            upload_video_to_presigned_url(upload_url, temp_video_path)
+            hume_job_id =upload_to_hume(temp_video_path)
+
             pose_results = pose_detection(temp_video_path)
             st.write('pose done')
             smile_results = detect_smiles_video(temp_video_path)
             st.write('smile done')
             prosody_results = measurePitch(temp_video_path)
             st.write('prosody done')
+            
+            emotion_preds = get_predictions(hume_job_id)
+            enriched_transcript = get_transcript(transcript_file_name)
+            st.write('transcript done')
+            emotion_results = transform_predictions(emotion_preds, enriched_transcript)
+            st.write('emotion done')
+            
+            interview_video = get_recorded_interview(temp_video_path)
+            llm_feedback = generate_feedback(emotion_results, prosody_results, smile_results, pose_results, interview_video)
+
             feedback = """
 Hello!
 Thank you for completing the interview. After analyzing your performance, I’d like to share my thoughts to help you grow and succeed in future interviews. Below, I’ll break down different aspects of your performance with specific feedback and examples. Let’s dive in!

@@ -134,7 +134,7 @@ def detect_hands_on_face(pose_results, hands_results, image, threshold = 50):
 def pose_detection(temp_video_path):
     cap = cv2.VideoCapture(temp_video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)  # Frames per second
-    frame_interval = int(fps / 3)   # Process every Nth frame for 3 FPS sampling
+    frame_interval = int(fps / 1)   # Process every Nth frame for 3 FPS sampling
 
     num_frames = 0
     num_frames_sampled = 0

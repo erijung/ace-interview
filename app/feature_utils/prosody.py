@@ -1,11 +1,14 @@
 import parselmouth
 from parselmouth.praat import call
 import statistics
-from audio_extract import extract_audio
+import moviepy.editor as mov
+import tempfile
 
 def measurePitch(video_path):
-    wav_path = "./temp.wav"
-    extract_audio(input_path=video_path, output_path=wav_path, output_format="wav")
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_wav:
+        wav_path = tmp_wav.name
+    clip = mov.VideoFileClip(video_path)
+    clip.audio.write_audiofile(wav_path)
     f0min = 75
     f0max = 300
     unit = "Hertz"

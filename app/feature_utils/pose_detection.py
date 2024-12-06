@@ -131,15 +131,7 @@ def detect_hands_on_face(pose_results, hands_results, image, threshold = 50):
             return False
     return False
 
-def pose_detection(uploaded_file):
-    if uploaded_file is None:
-        return "No video file uploaded."
-
-    # Save the uploaded video file to a temporary location
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".avi") as temp_video:
-        temp_video.write(uploaded_file.read())
-        temp_video_path = temp_video.name
-
+def pose_detection(temp_video_path):
     cap = cv2.VideoCapture(temp_video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)  # Frames per second
     frame_interval = int(fps / 3)   # Process every Nth frame for 3 FPS sampling

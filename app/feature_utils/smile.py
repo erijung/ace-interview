@@ -53,14 +53,21 @@ def detect_smiles_video(video_path):
 
         count += 1
 
-        if count % 500 == 0:
-          print(smiles, nonsmiles, count)
+#        if count % 500 == 0:
+#          print(smiles, nonsmiles, count)
 
 
     # Release everything once job is finished
     cap.release()
 
-    return smiles, nonsmiles, count
+    data = {
+    "user_video": {
+        "smiles": smiles,
+        "nonsmiles": nonsmiles,
+        "frame_count": count
+    }}
+
+    return data
 
 """
 # Example usage:

@@ -1,6 +1,8 @@
 import numpy as np
 import streamlit as st
+import tempfile
 from feature_utils.pose_detection import *
+from feature_utils.smile import *
 
 def main():
     st.set_page_config(
@@ -57,7 +59,12 @@ def main():
             "**Error:** No video uploaded. Please upload a video file in the space above."
         else:
             st.write("Processing video. This may take a few minutes...")
-            pose_results = pose_detection(video)
+            # Save the uploaded video file to a temporary location
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".avi") as temp_video:
+                temp_video.write(video.read())
+                temp_video_path = temp_video.name
+            pose_results = pose_detection(temp_video_path)
+            smile_results = detect_smiles_video(temp_video_path)
 
             feedback = """
 Hello!

@@ -67,9 +67,9 @@ def main():
             with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_video:
                 temp_video.write(video.read())
                 temp_video_path = temp_video.name
-            
+
             upload_details = get_upload_url("ace-interview")
-            upload_url = upload_details["upload_url"]
+            upload_url = upload_details["url"]
             transcript_file_name = upload_details["file"]
 
             upload_video_to_presigned_url(upload_url, temp_video_path)
@@ -81,13 +81,14 @@ def main():
             st.write('smile done')
             prosody_results = measurePitch(temp_video_path)
             st.write('prosody done')
-            
+
             emotion_preds = get_predictions(hume_job_id)
+            st.write('emotion preds done')
             enriched_transcript = get_transcript(transcript_file_name)
             st.write('transcript done')
             emotion_results = transform_predictions(emotion_preds, enriched_transcript)
-            st.write('emotion done')
-            
+            st.write('emotion results done')
+
             interview_video = get_recorded_interview(temp_video_path)
             llm_feedback = generate_feedback(emotion_results, prosody_results, smile_results, pose_results, interview_video)
 
@@ -122,8 +123,7 @@ You demonstrate potential as a candidate with a clear academic focus and relevan
 You’ve got a lot of potential, and with these adjustments, you’ll excel in future interviews. Best of luck"""
 
             st.header("Results:")
-            st.json(prosody_results)
-            #st.markdown(feedback)
+            st.markdown(llm_feedback)
             st.download_button(label = "Save feedback as .txt",
                        data = str(feedback),
                        file_name = "ace_interview_feedback.txt")

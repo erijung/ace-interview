@@ -53,7 +53,7 @@ def main():
     Then, upload the video file in the space below and hit the \
     **Generate feedback** button to begin the process."
 
-    video = st.file_uploader("*Upload interview video file*", type=["avi", "mp4"])
+    video = st.file_uploader("*Upload interview video file*", type=["mp4"])
 
     begin = st.button("**Generate feedback**")
     if begin:

@@ -17,6 +17,7 @@ AceInterview provides behavioral interview feedback for college students and new
 6. Once your video is uploaded, hit the `Generate feedback` button and watch as AceInterview processes your interview and provides detailed, personalized feedback on your interview behaviors!
 7. Hit the `Save feedback as .txt` button to store your feedback on your device.
 
-## Good to Know
+## Important to Know
+- You must have AWS keys, a Hume API key, and a Gemini API key stored in a `.env` file.
 - Results are most accurate and precise when the user is directly facing the camera. Imagine a typical online Zoom interview setting.
 - Feedback may take a while to process, so please be patient. We recommend limiting video answers to a couple of minutes.

@@ -19,5 +19,6 @@ AceInterview provides behavioral interview feedback for college students and new
 
 ## Important to Know
 - You must have AWS keys, a Hume API key, and a Gemini API key stored in a `.env` file.
+- Video files must be MP4 files.
 - Results are most accurate and precise when the user is directly facing the camera. Imagine a typical online Zoom interview setting.
 - Feedback may take a while to process, so please be patient. We recommend limiting video answers to a couple of minutes.

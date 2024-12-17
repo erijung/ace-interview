@@ -5,10 +5,12 @@ import time
 from dotenv import load_dotenv
 import os
 import re
+import asyncio
+import aiohttp
 
-load_dotenv()
-aws_access_key_id = os.getenv("aws_access_key_id")
-aws_secret_access_key = os.getenv("aws_secret_access_key")
+# load_dotenv()
+# aws_access_key_id = os.getenv("aws_access_key_id")
+# aws_secret_access_key = os.getenv("aws_secret_access_key")
 def get_upload_url(username):
     # Replace with your Lambda function's API Gateway endpoint
     url = "https://6tc6duce7g4vx27wa4ljnn4u2y0cssms.lambda-url.us-west-1.on.aws/"
@@ -62,7 +64,7 @@ def upload_video_to_presigned_url(presigned_url, video_file_path):
 
 
 
-def get_transcript(file, timeout=360, wait_interval=5, bucket_name = 'mids-capstone-aceinterview', folder_name = 'CrisperWhisperEndpoint'):
+async def get_transcript(file, timeout=360, wait_interval=5, bucket_name = 'mids-capstone-aceinterview', folder_name = 'CrisperWhisperEndpoint'):
     """
     Fetch a JSON file representing the transcript with word level timestamps from an S3 bucket, waiting for it to appear if necessary.
 
@@ -86,13 +88,15 @@ def get_transcript(file, timeout=360, wait_interval=5, bucket_name = 'mids-capst
     payload = {
         "file": file
     }
-
-
-    # Send the POST request
     try:
-        response = requests.post(url, json=payload)
-        
-        return response
-
+        response = requests.post(url, json=payload, timeout=900)
+        # Check if the request was successful
+        if response.status_code == 200:
+            response_json = response.json()
+            return response_json
+        else:
+            raise ValueError(f"Error: {response.status_code} - {response.text}")
     except Exception as e:
-        print("An error occurred:", str(e))
+        raise e
+    #     print("An error occurred:", str(e))
+

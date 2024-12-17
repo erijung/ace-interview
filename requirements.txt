@@ -1,6 +1,6 @@
 streamlit==1.21.0
 opencv-python==4.9.0.80
-mediapipe==0.10.11
+mediapipe==0.10.9
 mpmath==1.2.1
 boto3==1.35.28
 praat-parselmouth==0.4.5

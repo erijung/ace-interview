@@ -7,8 +7,10 @@ from feature_utils.prosody import *
 from feature_utils.emotion_analysis import *
 from feature_utils.crisperwhisper import *
 from feature_utils.downstream_llm import *
+import asyncio
 
-def main():
+
+async def main():
     st.set_page_config(
     page_title="AceInterview",
     page_icon=":briefcase:",
@@ -73,25 +75,27 @@ def main():
             transcript_file_name = upload_details["file"]
 
             upload_video_to_presigned_url(upload_url, temp_video_path)
-            hume_job_id =upload_to_hume(temp_video_path)
+            hume_job_id = await upload_to_hume(temp_video_path)
 
             pose_results = pose_detection(temp_video_path)
             smile_results = detect_smiles_video(temp_video_path)
             prosody_results = measurePitch(temp_video_path)
 
-            emotion_preds = get_predictions(hume_job_id)
-            enriched_transcript = get_transcript(transcript_file_name)
+            emotion_preds = await get_predictions(hume_job_id)
+            enriched_transcript = await get_transcript(transcript_file_name)
+
             emotion_results = transform_predictions(emotion_preds, enriched_transcript)
 
             interview_video = get_recorded_interview(temp_video_path)
-            llm_feedback = generate_feedback(emotion_results, prosody_results, smile_results, pose_results, interview_video)
+            llm_feedback = generate_feedback(emotion_results, prosody_results, smile_results, pose_results, interview_video, question)
 
 
             st.header("Results:")
             st.markdown(llm_feedback)
             st.download_button(label = "Save feedback as .txt",
-                       data = str(feedback),
+                       data = str(llm_feedback),
                        file_name = "ace_interview_feedback.txt")
 
 if __name__ == "__main__":
-    main()
+    # main()
+    asyncio.run(main())

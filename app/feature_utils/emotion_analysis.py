@@ -49,9 +49,9 @@ async def get_predictions(job_id):
 
 def transform_predictions(hume_output, transcript):
   results = []
-  prosody_predictions = json.loads(hume_output)['predictions'][0]['models']['prosody']['grouped_predictions'][0]['predictions']
-  face_expressions_predictions = json.loads(hume_output)['predictions'][0]['models']['face']['grouped_predictions'][0]['predictions']
-  enriched_transcript = json.loads(transcript)['chunks']
+  prosody_predictions = hume_output['predictions'][0]['models']['prosody']['grouped_predictions'][0]['predictions']
+  face_expressions_predictions = hume_output['predictions'][0]['models']['face']['grouped_predictions'][0]['predictions']
+  enriched_transcript = transcript['chunks']
   prosody_index = 0
   transcript_index = 0
   face_index = 0

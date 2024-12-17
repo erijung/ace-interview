@@ -6,11 +6,13 @@ import os
 from dotenv import load_dotenv
 import json
 import heapq
+import streamlit as st
+
+HUME_API_KEY = st.secrets['HUME_API_KEY']
 
 
-load_dotenv()
 
-client = AsyncHumeClient(api_key=os.getenv("HUME_API_KEY"))
+client = AsyncHumeClient(api_key=HUME_API_KEY)
 
 async def upload_to_hume(video_path):
 

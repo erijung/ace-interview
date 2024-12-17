@@ -8,9 +8,7 @@ import re
 import asyncio
 import aiohttp
 
-# load_dotenv()
-# aws_access_key_id = os.getenv("aws_access_key_id")
-# aws_secret_access_key = os.getenv("aws_secret_access_key")
+
 def get_upload_url(username):
     # Replace with your Lambda function's API Gateway endpoint
     url = "https://6tc6duce7g4vx27wa4ljnn4u2y0cssms.lambda-url.us-west-1.on.aws/"
@@ -89,7 +87,7 @@ async def get_transcript(file, timeout=360, wait_interval=5, bucket_name = 'mids
         "file": file
     }
     try:
-        response = requests.post(url, json=payload, timeout=900)
+        response = requests.post(url, json=payload, timeout=None)
         # Check if the request was successful
         if response.status_code == 200:
             response_json = response.json()

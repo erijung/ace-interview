@@ -1,15 +1,14 @@
 from openai import OpenAI
 import os
-from dotenv import load_dotenv
 import google.generativeai as genai
 import time
+import streamlit as st
 
-load_dotenv()
 
 gemini_MODEL="gemini-1.5-pro"
-gemini_key=os.getenv("GEMINI_API_KEY")
+# gemini_key=os.getenv("GEMINI_API_KEY")
 # client = OpenAI(api_key=gemini_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
-
+gemini_key = st.secrets["GEMINI_API_KEY"]
 
 def get_recorded_interview(video_path):
     genai.configure(api_key=gemini_key)

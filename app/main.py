@@ -56,7 +56,8 @@ async def main():
     **Generate feedback** button to begin the process."
 
     video = st.file_uploader("*Upload interview video file*", type=["mp4"])
-
+    if video:
+        st.video(video)
     begin = st.button("**Generate feedback**")
     if begin:
         if question == "":

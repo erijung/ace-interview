@@ -80,33 +80,19 @@ def get_transcript(file, timeout=360, wait_interval=5, bucket_name = 'mids-capst
         FileNotFoundError: If the file does not appear within the timeout period.
         ValueError: If the file content is not valid JSON.
     """
-    # Initialize the S3 client
-    s3_client = boto3.client('s3', aws_access_key_id = aws_access_key_id, aws_secret_access_key = aws_secret_access_key)
+    url = "https://ye76kypj5yv3wof2jq55mi7ffu0clmww.lambda-url.us-west-1.on.aws/"
 
-    # Construct the key (path to the file in the bucket)
-    key = f"{folder_name}/{file}.json"
+    # Replace with the desired username value
+    payload = {
+        "file": file
+    }
 
-    start_time = time.time()
-    while time.time() - start_time < timeout:
-        try:
-            # Attempt to fetch the file
-            response = s3_client.get_object(Bucket=bucket_name, Key=key)
-            # Read and parse the JSON content
-            content = json.loads(response['Body'].read())
-            json_data = json.loads(content)
 
-            return json_data
+    # Send the POST request
+    try:
+        response = requests.post(url, json=payload)
+        
+        return response
 
-        # except s3_client.exceptions.NoSuchKey:
-        #     print(f"File '{key}' not found. Retrying in {wait_interval} seconds...")
-        #     time.sleep(wait_interval)  # Wait before retrying
-        #
-        # except json.JSONDecodeError as e:
-        #     raise ValueError(f"Error decoding JSON from file '{key}': {e}")
-
-        except Exception as e:
-            time.sleep(wait_interval)  # Wait before retrying
-            #raise Exception(f"An unexpected error occurred: {e}")
-
-    # If we exit the loop, the file was not found within the timeout period
-    raise FileNotFoundError(f"File '{key}' not found in bucket '{bucket_name}' after {timeout} seconds.")
+    except Exception as e:
+        print("An error occurred:", str(e))

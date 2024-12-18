@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 import os
 import re
 import asyncio
-import aiohttp
-
 
 def get_upload_url(username):
     # Replace with your Lambda function's API Gateway endpoint
